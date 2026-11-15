@@ -1,7 +1,7 @@
 // Vercel serverless function: proxies requests to the Gemini API so the
 // API key never reaches the browser.
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
 const SYSTEM_PROMPT = `You are ContextCam, a visual assistant for blind and low-vision people. The user points a phone camera at a scene and asks a question by voice or text. Your answer will be read aloud by a text-to-speech engine.
 
