@@ -1,7 +1,7 @@
 // Vercel serverless function: proxies requests to the Gemini API so the
 // API key never reaches the browser.
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 
 const SYSTEM_PROMPT = `You are ContextCam, a visual assistant for blind and low-vision people. The user points a phone camera at a scene and asks a question by voice or text. Your answer will be read aloud by a text-to-speech engine.
 
@@ -76,9 +76,11 @@ export default async function handler(req, res) {
         systemInstruction: { parts: [{ text: systemText }] },
         contents,
         generationConfig: {
-          temperature: 0.3,
           maxOutputTokens: 400,
-          thinkingConfig: { thinkingBudget: 0 },
+          // Gemini 2.5 uses thinkingBudget; Gemini 3.x uses thinkingLevel.
+          thinkingConfig: MODEL.startsWith("gemini-2.5")
+            ? { thinkingBudget: 0 }
+            : { thinkingLevel: "minimal" },
         },
       }),
     });
