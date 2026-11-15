@@ -80,7 +80,7 @@ export default async function handler(req, res) {
           // Gemini 2.5 uses thinkingBudget; Gemini 3.x uses thinkingLevel.
           thinkingConfig: MODEL.startsWith("gemini-2.5")
             ? { thinkingBudget: 0 }
-            : { thinkingLevel: "minimal" },
+            : { thinkingLevel: "low" },
         },
       }),
     });
