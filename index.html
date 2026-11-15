@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>ContextCam – Ask your camera</title>
+  <meta name="description" content="Point your camera, ask a question, hear the answer. A voice-first visual assistant powered by Gemini." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#mic">Skip to microphone button</a>
+
+  <header class="top">
+    <h1>ContextCam</h1>
+    <div class="top-actions">
+      <button id="flip" class="chip" type="button" aria-label="Switch between front and back camera">Flip camera</button>
+      <button id="settings-btn" class="chip" type="button" aria-expanded="false" aria-controls="settings">Settings</button>
+    </div>
+  </header>
+
+  <section id="settings" class="settings" hidden aria-label="Settings">
+    <label>Speech speed
+      <input id="rate" type="range" min="0.7" max="1.6" step="0.1" value="1.0" />
+    </label>
+    <label>Answer language
+      <select id="lang">
+        <option value="">Same as my device</option>
+        <option value="English">English</option>
+        <option value="Hindi">हिन्दी (Hindi)</option>
+        <option value="Marathi">मराठी (Marathi)</option>
+        <option value="Spanish">Español</option>
+        <option value="French">Français</option>
+        <option value="German">Deutsch</option>
+      </select>
+    </label>
+    <label class="check"><input id="auto-scan" type="checkbox" checked /> Tip: say or type "describe" with no question to hear a full scene summary</label>
+  </section>
+
+  <main>
+    <div class="viewfinder">
+      <video id="video" autoplay playsinline muted aria-label="Live camera preview"></video>
+      <div id="cam-msg" class="cam-msg" role="status">Starting camera…</div>
+      <div id="listening" class="listening" hidden>Listening…</div>
+    </div>
+
+    <section class="answer-card" aria-labelledby="answer-label">
+      <h2 id="answer-label" class="sr-only">Answer</h2>
+      <p id="status" class="status" role="status" aria-live="polite">Tap the big button and ask a question.</p>
+      <p id="answer" class="answer" aria-live="assertive"></p>
+      <div class="answer-actions">
+        <button id="repeat" class="chip" type="button" disabled>Repeat</button>
+        <button id="stop" class="chip" type="button">Stop speaking</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <form id="text-form" class="text-form" autocomplete="off">
+      <label for="question" class="sr-only">Type your question</label>
+      <input id="question" type="text" inputmode="text" placeholder="Or type: Which bottle is 50mg?" enterkeyhint="send" />
+      <button type="submit" class="chip primary">Ask</button>
+    </form>
+
+    <div class="big-row">
+      <button id="describe" class="big secondary" type="button">Describe scene</button>
+      <button id="mic" class="big primary" type="button" aria-pressed="false">
+        <span id="mic-label">Tap to ask</span>
+      </button>
+    </div>
+    <p class="hint">Hold your phone steady, 20–30 cm from the object. Always double-check medicine and traffic decisions with another person.</p>
+  </footer>
+
+  <canvas id="canvas" hidden></canvas>
+  <script src="app.js"></script>
+</body>
+</html>
